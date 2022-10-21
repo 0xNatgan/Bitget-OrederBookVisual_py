@@ -8,6 +8,7 @@ import threading
 from class_Request import *
 from class_data import *
 from drawingfunctions import *
+import time
 
 def maxshape(data):
     max = 0
@@ -26,19 +27,21 @@ def results(data):
 
 #================= Main =================
 def main():
-    symbol = "USDCUSDT_SPBL"
-    limit = "2"
+    symbol = "BTCUSDT_SPBL"
+    limit = 40
     url = 'https://api.bitget.com/api/spot/v1/market/depth?symbol='
     url2 = '&type=step0&limit='
     pygame.init()
-    screen = pygame.display.set_mode([500, 500])
+    screen = pygame.display.set_mode()
+    x, y = screen.get_size()
+    font = pygame.font.SysFont(None, 24)
     # max = 0
     # window_stats = {"screen" : [500, 500], "order_depth": limit*2, "max": max }
     # window_stats["max"] = maxshape(data)
-
     request = Request(url, url2, symbol, limit)
     data = Data(request.get_data(), limit)
     print(data.data)
+
     print(data.spread)
     data.maj(request.get_data(), limit)
 
@@ -53,13 +56,24 @@ def main():
 
         # Fill the background with white
         screen.fill((0, 0, 0))
+        # rect_anb = rects_separated(x, y, data)
+        rect_anb = rects_cumulative(x, y, data)
+        ask_rect = rect_anb[0]
+        bid_rect = rect_anb[1]
 
+        # img = font.render('hello', True, BLUE)
+        # screen.blit(img, (20, 20))
         # Draw a solid blue circle in the center
+        for i in range(limit):
+            pygame.draw.rect(screen, (0, 255, 0), ask_rect[i])
 
-        pygame.draw.rect(screen, (255, 0, 0), (250, 250), ())
+        for i in range(limit):
+            pygame.draw.rect(screen, (255, 0, 0), bid_rect[i])
 
         # Flip the display
         pygame.display.flip()
+        # print("=============================")
+        time.sleep(0.05)
 
     # Done! Time to quit.
     pygame.quit()

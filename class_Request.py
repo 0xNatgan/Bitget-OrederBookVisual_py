@@ -9,7 +9,7 @@ class Request:
         self.url=  url
         self.url2 = url2
         self.symbol = symbol
-        self.limit = limit
+        self.limit = str(limit)
         self.max_order = 0
 
     def get_data(self):

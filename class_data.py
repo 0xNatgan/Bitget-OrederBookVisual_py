@@ -18,4 +18,4 @@ class Data:
         self.bids = data["bids"]
         self.limit = limit
         self.spread = float(self.asks[0][0]) - float(self.bids[0][0])
-        print("updated data")
+        # print("updated data")
