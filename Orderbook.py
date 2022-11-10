@@ -27,20 +27,26 @@ def results(data):
 
 #================= Main =================
 def main():
-    symbol = "BTCUSDT_SPBL"
-    limit = 40
+    symbol = "USDCUSDT_SPBL"
+    limit = 10
     url = 'https://api.bitget.com/api/spot/v1/market/depth?symbol='
     url2 = '&type=step0&limit='
+
+
+
     pygame.init()
     screen = pygame.display.set_mode()
     x, y = screen.get_size()
-    font = pygame.font.SysFont(None, 24)
+    y = y - 80
+    font = pygame.font.SysFont(None, 20)
+
+
+
     # max = 0
     # window_stats = {"screen" : [500, 500], "order_depth": limit*2, "max": max }
     # window_stats["max"] = maxshape(data)
     request = Request(url, url2, symbol, limit)
     data = Data(request.get_data(), limit)
-    print(data.data)
 
     print(data.spread)
     data.maj(request.get_data(), limit)
@@ -57,22 +63,30 @@ def main():
         # Fill the background with white
         screen.fill((0, 0, 0))
         # rect_anb = rects_separated(x, y, data)
-        rect_anb = rects_cumulative(x, y, data)
-        ask_rect = rect_anb[0]
-        bid_rect = rect_anb[1]
+        ask_rect, bid_rect = rects_cumulative(x, y, data)
+        # ask_rect = rect_anb[0]
+        # bid_rect = rect_anb[1]
 
         # img = font.render('hello', True, BLUE)
         # screen.blit(img, (20, 20))
         # Draw a solid blue circle in the center
         for i in range(limit):
-            pygame.draw.rect(screen, (0, 255, 0), ask_rect[i])
+            pygame.draw.rect(screen, (150, 255, 0), ask_rect[i])
+            print(ask_rect[i],"  ", str(data.asks[i][0]))
+            img_asks = font.render(str(data.asks[i][0]), True, (255,255,255))
+            screen.blit(img_asks,(ask_rect[i][0] + 5, y))
+
+        print("end")
 
         for i in range(limit):
-            pygame.draw.rect(screen, (255, 0, 0), bid_rect[i])
+            pygame.draw.rect(screen, (230, 50, 0), bid_rect[i])
+            print(ask_rect[i], "   ",str(data.bids[i][0]))
+            img_bid = font.render(str(data.bids[i][0]), True, (255, 255, 255))
+            screen.blit(img_bid, (bid_rect[i][0] + 5, y))
 
         # Flip the display
         pygame.display.flip()
-        # print("=============================")
+        print("========================================================")
         time.sleep(0.05)
 
     # Done! Time to quit.

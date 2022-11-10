@@ -46,7 +46,7 @@ def rects_cumulative(x, y, data):
     max = cumul_max(data, x)
     limit2 = data.limit * 2
     # print("asks")
-    cpt2 = data.limit
+    cpt2 = data.limit - 1
     for i in range(data.limit):
         ask_rect.append(((x / limit2) * cpt2,
                          (100 + y) - ((float(data.asks[i][1])+ asks_cum)/ max * y),
@@ -64,8 +64,8 @@ def rects_cumulative(x, y, data):
         bids_cum += float(data.bids[i][1])
         cpt += 1
 
-    rect_anb = [ask_rect, bid_rect]
-    return rect_anb
+
+    return  ask_rect, bid_rect
 
 
 def rects_separated(x, y, data):
