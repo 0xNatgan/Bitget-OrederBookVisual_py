@@ -72,7 +72,9 @@ def main():
         # Draw a solid blue circle in the center
         for i in range(limit):
             pygame.draw.rect(screen, (150, 255, 0), ask_rect[i])
-            print(ask_rect[i],"  ", str(data.asks[i][0]))
+            a = (round(ask_rect[i][0], 2), round(ask_rect[i][1], 2),
+                 round(ask_rect[i][2], 2), round(ask_rect[i][3], 2))
+            print(a, "  ", data.asks[i][0], "    size :", data.asks[i][1])
             img_asks = font.render(str(data.asks[i][0]), True, (255,255,255))
             screen.blit(img_asks,(ask_rect[i][0] + 5, y))
 
@@ -80,7 +82,9 @@ def main():
 
         for i in range(limit):
             pygame.draw.rect(screen, (230, 50, 0), bid_rect[i])
-            print(ask_rect[i], "   ",str(data.bids[i][0]))
+            b = (round(bid_rect[i][0], 2), round(bid_rect[i][1], 2),
+                 round(bid_rect[i][2], 2), round(bid_rect[i][3], 2))
+            print(b, "   ",data.bids[i][0], "    size :", data.bids[i][1])
             img_bid = font.render(str(data.bids[i][0]), True, (255, 255, 255))
             screen.blit(img_bid, (bid_rect[i][0] + 5, y))
 
